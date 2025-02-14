@@ -8,6 +8,6 @@ const router = express.Router();
 // Protected routes (require authentication)//testuser3//testuser03
 router.get("/profile", authMiddleware, viewProfile); // View own profile
 router.put("/profile", authMiddleware, updateProfile); // Update own profile
-router.get("/profile/:username", viewOtherUserProfile); // View another user's profile
+router.get("/profile/:username", viewOtherUserProfile);
 
 module.exports = router;

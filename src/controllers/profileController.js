@@ -1,4 +1,6 @@
 const User = require("../models/User");
+const Post = require("../models/Post");
+
 //get own profile!! 
 const viewProfile = async (req, res) => {
   try {
@@ -22,14 +24,17 @@ const viewProfile = async (req, res) => {
 };
 
 //get others profile
+
 const viewOtherUserProfile = async (req, res) => {
   try {
-    const { username} = req.params; // Get userId from URL params
-    const user = await User.findOne({ username }).select("-password"); // Find by userId
+    const { username } = req.params;
+    const user = await User.findOne({ username }).select("-password");
 
     if (!user) {
       return res.status(404).json({ error: "User not found." });
     }
+
+    const posts = await Post.find({ userId: user._id }).limit(5);
 
     res.json({
       userId: user.userId,
@@ -37,9 +42,10 @@ const viewOtherUserProfile = async (req, res) => {
       gender: user.gender,
       bio: user.bio,
       profilePic: user.profilePic,
-      posts: user.posts.slice(0, 5), // Max 5 posts
+      posts: posts,
     });
   } catch (error) {
+    console.error("Error fetching user profile:", error);
     res.status(500).json({ error: "Error fetching user profile." });
   }
 };
