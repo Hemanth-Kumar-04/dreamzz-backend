@@ -9,6 +9,8 @@ const chatRoutes = require("./routes/chatRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const errorHandler = require("./middlewares/errorHandler");
+const postRoutes = require("./routes/postRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 require("dotenv").config();
 
 // Connect to MongoDB
@@ -28,6 +30,9 @@ app.use("/api/dreams", dreamRoutes);
 app.use("/api/chats", chatRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/profiles", profileRoutes);
+
 
 // Global error handler
 app.use(errorHandler);
