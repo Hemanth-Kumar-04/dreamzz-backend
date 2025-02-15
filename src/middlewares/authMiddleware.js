@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     return res.status(401).json({ error: "No token provided or invalid format." });
   }
 
-  // Extract only the token part (after "Bearer ")
+  // Extracts only the token part (after "Bearer ")
   const token = authHeader.split(" ")[1];
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {

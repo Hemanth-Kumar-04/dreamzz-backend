@@ -2,7 +2,7 @@ const Post = require("../models/Post");
 const User = require("../models/User");
 
 exports.addPost = async (req, res) => {
-  const { postImage, caption } = req.body; // Image URL or base64
+  const { postImage, caption } = req.body; // Image URL or base
   const userId = req.user.userId; // Get user ID from auth middleware
 
   if (!postImage) {

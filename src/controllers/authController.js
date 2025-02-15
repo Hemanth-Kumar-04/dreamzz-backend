@@ -1,4 +1,3 @@
-// src/controllers/authController.js
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 require("dotenv").config();
@@ -52,7 +51,7 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials." });
     }
 
-    // Generate JWT Token
+    // JWT Token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d", // Token expires in 7 days
     });

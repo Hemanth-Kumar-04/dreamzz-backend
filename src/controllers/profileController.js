@@ -16,7 +16,7 @@ const viewProfile = async (req, res) => {
       gender: user.gender,
       bio: user.bio,
       profilePic: user.profilePic,
-      posts: user.posts.slice(0, 5), // Ensure max 5 posts are returned
+      posts: user.posts.slice(0, 5), 
     });
   } catch (error) {
     res.status(500).json({ error: "Error fetching user profile." });
@@ -75,7 +75,6 @@ const updateProfile = async (req, res) => {
 };
 
 
- // This should not log 'undefined'
  module.exports = {
   viewProfile,
   updateProfile,

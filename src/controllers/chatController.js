@@ -18,7 +18,7 @@ exports.createChat = async (req, res) => {
       return res.status(200).json({ message: "Chat already exists.", chatId: chat._id });
     }
 
-    // Create a new chat
+    // Creates a new chat
     chat = new Chat({
       user1: userId,
       user2: recipientId,
