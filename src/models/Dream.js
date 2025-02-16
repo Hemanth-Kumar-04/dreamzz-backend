@@ -7,7 +7,6 @@ const DreamSchema = new mongoose.Schema({
   content: { type: String, required: true },
   tags: [{ type: String }], // Controller will enforce a maximum of 2 tags
   bookmark: { type: Boolean, default: false },
-  createdAt: { type: Date, default: Date.now }
-});
+},  { timestamps: true } );
 
 module.exports = mongoose.model("Dream", DreamSchema);

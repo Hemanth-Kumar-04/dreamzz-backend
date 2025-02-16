@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require("cors"); // Import CORS
+const cors = require("cors");
 const connectDB = require("./config/db");
 const cron = require("node-cron");
 const { deleteOldDreams } = require("./utils/deleteOldData");
@@ -13,7 +13,7 @@ const postRoutes = require("./routes/postRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 require("dotenv").config();
 
-// Connect to MongoDB
+// Connecting to MongoDB
 connectDB();
 
 const app = express();
@@ -33,7 +33,6 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/profiles", profileRoutes);
 
-
 // Global error handler
 app.use(errorHandler);
 
@@ -51,4 +50,6 @@ cron.schedule("0 0 * * *", () => {
 
 // Start the WebSocket server (this file runs its own server)
 require("./ws/chatWS");
-  
+
+// Start the matching scheduler (automates matching and chat creation)
+require("./matchingScheduler");

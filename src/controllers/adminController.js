@@ -1,4 +1,3 @@
-// src/controllers/adminController.js
 const User = require("../models/User");
 const Dream = require("../models/Dream");
 const Chat = require("../models/Chat");

@@ -1,11 +1,13 @@
+// src/controllers/chatController.js
 const Chat = require("../models/Chat");
 
+// Create chat via API (HTTP endpoint)
 exports.createChat = async (req, res) => {
-  const { userId } = req.user;  // Authenticated user
-  const { recipientId } = req.body;  // Person to chat with
+  const { userId } = req.user; // Authenticated user
+  const { recipientId } = req.body; // Person to chat with
 
   try {
-    // Check if a chat already exists
+    // Check if an active chat already exists between these users
     let chat = await Chat.findOne({
       $or: [
         { user1: userId, user2: recipientId },
@@ -18,7 +20,7 @@ exports.createChat = async (req, res) => {
       return res.status(200).json({ message: "Chat already exists.", chatId: chat._id });
     }
 
-    // Creates a new chat
+    // Create a new chat
     chat = new Chat({
       user1: userId,
       user2: recipientId,
@@ -34,7 +36,34 @@ exports.createChat = async (req, res) => {
   }
 };
 
-// Send message in an existing chat
+// Internal function: Create chat automatically between two users (for matching)
+exports.createChatForMatch = async (user1, user2) => {
+  // Check if an active chat already exists between these users
+  let chat = await Chat.findOne({
+    $or: [
+      { user1: user1, user2: user2 },
+      { user1: user2, user2: user1 }
+    ],
+    isActive: true
+  });
+
+  if (chat) {
+    return chat;
+  }
+
+  // Create a new chat
+  chat = new Chat({
+    user1,
+    user2,
+    messages: [],
+    isActive: true
+  });
+
+  await chat.save();
+  return chat;
+};
+
+// Send message in an existing chat via API
 exports.addMessage = async (req, res) => {
   const { chatId, message } = req.body;
   const { userId } = req.user;
